@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import * as firebase from "firebase";
 import FirebaseAuth from "react-firebaseui/FirebaseAuth";
-import MdPerson from "react-ionicons/lib/MdPerson";
 
 import Button from "../particles/button";
 import Input from "../particles/input";
@@ -19,6 +18,7 @@ const Main = styled.div`
   height: 400px;
   justify-content: ${props => props.flex};
   transition: 0.3 ease;
+  text-align: center;
   width: ${width <= 768 ? "300px" : "360px"};
 
   p {
@@ -50,7 +50,10 @@ const FacebookBtn = styled(FirebaseAuth)`
 
 const UserIcon = styled.div`
   align-items: center;
-  background-color: #ddd;
+  background-image: url(${props => props.url});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   border: solid 3px #fff;
   border-radius: 100vw;
   display: flex;
@@ -76,6 +79,7 @@ const Logout = styled.button`
 class Login extends Component {
   constructor(props) {
     super(props);
+
     this.toggle = () =>
       this.context.setContext(prevContext => ({ logged: !prevContext.logged }));
 
@@ -99,6 +103,17 @@ class Login extends Component {
       const { value } = event.target;
       this.setState({ password: value });
     };
+
+    this.userInfo = () => {
+      const user = firebase.auth().currentUser;
+      user != null &&
+        this.setState({
+          name: user.providerData[Object.keys(user.providerData)[0]].displayName
+        });
+      this.setState({
+        url: user.providerData[Object.keys(user.providerData)[0]].photoURL
+      });
+    };
     this.login = () => {
       const auth = firebase.auth();
       const verification = auth.signInWithEmailAndPassword(
@@ -115,17 +130,14 @@ class Login extends Component {
       this.toggle();
     };
 
-    this.state = {
-      email: "",
-      password: ""
-    };
+    this.state = {};
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(firebaseUser => {
       if (firebaseUser) {
-        this.setState({ email: firebaseUser.email });
         this.toggle();
+        this.userInfo();
         window.scrollTo(0, 850);
       } else {
         console.log("Error");
@@ -134,6 +146,7 @@ class Login extends Component {
   }
 
   render() {
+    const { name, url } = this.state;
     const { logged } = this.context;
     return (
       <Main
@@ -165,12 +178,10 @@ class Login extends Component {
           </>
         ) : (
           <>
-            <UserIcon>
-              <MdPerson src="" alt="User Image" fontSize="100px" color="#bbb" />
-            </UserIcon>
+            <UserIcon url={url} />
             <p>
               Bem Vindo <br />
-              {this.state.email}
+              {name}
             </p>
             <Logout onClick={this.logout}>LogOut</Logout>
           </>

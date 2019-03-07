@@ -13,10 +13,10 @@ const porcentagem = 80;
 const Main = styled.div`
   align-items: center;
   background-color: #fff;
+  ${props => props.border}
   border-radius: 40px;
   color: #626262;
   display: flex;
-  filter: ${props => props.filter};
   height: 120px;
   justify-content: flex-start;
   margin-bottom: 15px;
@@ -95,7 +95,7 @@ class Ranked extends Component {
       <Main
         value={checked}
         onClick={this.check}
-        filter={checked === true ? "opacity(70%)" : "none"}
+        border={checked === true && "border: solid #2d29d2 2px;"}
         check={checked}
       >
         <Img>

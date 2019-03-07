@@ -1,6 +1,4 @@
-export const key = "AIzaSyDBWPgrm9Zx0efC67prd3ef1RtaKCsTCYE";
-
-// AIzaSyD2atUYInE6aLgfmXoJeaV11dTq2i3szAA
+export const key = "AIzaSyDWNbZGQEVBu_Z3aDvYhdLnL9RQZx4eX1E";
 
 export const width = window.innerWidth;
 

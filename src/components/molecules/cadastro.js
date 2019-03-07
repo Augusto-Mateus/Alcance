@@ -10,14 +10,25 @@ const webKit = "-webkit-";
 
 const inputs = [
   "Nome",
+  "Foto de perfil",
   "Data de nascimento",
   "CPF",
   "Email",
   "Telefone",
-  "Senha"
+  "Senha",
+  "Confirmar Senha"
 ];
 
-const type = ["text", "number", "number", "email", "number", "password"];
+const type = [
+  "text",
+  "file",
+  "number",
+  "number",
+  "email",
+  "number",
+  "password",
+  "password"
+];
 
 const Main = styled.div`
   align-items: center;
@@ -61,6 +72,7 @@ const SubDiv = styled.div`
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #ccc;
+    color: #bbb;
     ::placeholder {
       color: #bbb;
     }
@@ -72,6 +84,12 @@ const SubDiv = styled.div`
   input::-webkit-inner-spin-button,
   input::-webkit-clear-button {
     display: none;
+  }
+  input::-webkit-file-upload-button {
+    color: #bbb;
+    border: none;
+    background: none;
+    margin-left: -6px;
   }
 `;
 
@@ -144,6 +162,9 @@ class Cadastro extends Component {
                     key={input}
                     type={type[inputs.indexOf(input)]}
                     onChange={this.set}
+                    accept={
+                      type[inputs.indexOf(input)] === "file" ? "image/*" : ""
+                    }
                   />
                 );
               })}
