@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 import Background from "./static/LandingPageBackground.png";
+// import DataBase from "./Database";
 import Context from "./context";
 import width from "./config";
 
@@ -36,6 +37,7 @@ class App extends Component {
   render() {
     return (
       <Context.Provider value={this.state}>
+        {/* <DataBase /> */}
         {width <= 768 ? (
           <Main>
             <LandingPageSections>

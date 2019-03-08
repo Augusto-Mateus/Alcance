@@ -10,11 +10,12 @@ const sections = [
   "PÚBLICO ALVO",
   "RANKING",
   "DURAÇÃO DE CAMPANHA",
+  "DADOS DA CAMPANHA",
   "PAGAMENTO",
   "CONTAS"
 ];
 
-const scroll = [0, 850, 1570, 2325, 3080, 3850, 4600, 8000];
+const scroll = [0, 850, 1570, 2325, 3080, 3850, 4600, 5400, 8000];
 
 const Main = styled.div`
   display: flex;

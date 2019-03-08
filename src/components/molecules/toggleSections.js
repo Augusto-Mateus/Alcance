@@ -11,6 +11,7 @@ import PublicoAlvo from "./publicoAlvo";
 import Ranking from "./ranking";
 import Segmentacao from "./segmentacao";
 import Objetivo from "./objetivo";
+import DadosDeCampanha from "./dadosDoAnuncio";
 
 const Main = styled.div`
   display: flex;
@@ -53,12 +54,16 @@ class ToggleSection extends Component {
               <NextSectionButton scroll={3850} />
             </SubDivReverse>
             <SubDivReverse>
+              <DadosDeCampanha />
+              <NextSectionButton scroll={4600} />
+            </SubDivReverse>
+            <SubDivReverse>
               <Contas />
               <SubDiv>
                 <Pagamento />
-                <NextSectionButton scroll={5400} />
+                <NextSectionButton scroll={8000} />
               </SubDiv>
-              <NextSectionButton scroll={4600} />
+              <NextSectionButton scroll={5400} />
             </SubDivReverse>
           </Main>
         )}

@@ -10,4 +10,4 @@ class DataBase extends Component {
   }
 }
 
-export default Database;
+export default DataBase;

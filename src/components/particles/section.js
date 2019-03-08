@@ -6,7 +6,7 @@ const StyledSection = styled.button`
   border: none;
   border-radius: 20px;
   color: #fff;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bold;
   letter-spacing: 1.3px;
   padding: 5px 0px 5px 0px;
