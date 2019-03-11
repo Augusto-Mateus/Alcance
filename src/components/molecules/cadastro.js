@@ -1,34 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import * as firebase from "firebase";
+import Form from "react-bootstrap/Form";
 
 import CadastroImg from "../../static/Cadastro.png";
 import Objetivos from "../../static/Objetivos.png";
 import width from "../../config";
 
 const webKit = "-webkit-";
-
-const inputs = [
-  "Nome",
-  "Foto de perfil",
-  "Data de nascimento",
-  "CPF",
-  "Email",
-  "Telefone",
-  "Senha",
-  "Confirmar Senha"
-];
-
-const type = [
-  "text",
-  "file",
-  "number",
-  "number",
-  "email",
-  "number",
-  "password",
-  "password"
-];
 
 const Main = styled.div`
   align-items: center;
@@ -50,7 +29,7 @@ const Main = styled.div`
   }
 `;
 
-const Div = styled.form`
+const Div = styled.div`
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 3px 3px 10px #ddd;
@@ -72,7 +51,9 @@ const SubDiv = styled.div`
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #ccc;
+    border-radius: 0;
     color: #bbb;
+    padding: 0;
     ::placeholder {
       color: #bbb;
     }
@@ -111,7 +92,17 @@ const Img = styled.img`
 class Cadastro extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      date: "number",
+      file: "text"
+    };
+
+    this.type = e => {
+      const { type } = e.target;
+      type === "number"
+        ? this.setState({ date: "date" })
+        : this.setState({ file: "file" });
+    };
 
     this.set = event => {
       const { value } = event.target;
@@ -125,8 +116,8 @@ class Cadastro extends Component {
     };
 
     this.createAccount = () => {
-      const { nome, data, CPF, email, phone, password } = this.state;
-      if (!nome || !data || !CPF || !email || !phone || !password) {
+      const { email, password } = this.state;
+      if (!email || !password) {
         alert("Preencha todos os campos do cadastro!!!");
       } else {
         const auth = firebase.auth();
@@ -149,26 +140,63 @@ class Cadastro extends Component {
   }
 
   render() {
+    const { file, date } = this.state;
     return (
       <Main>
         <h1>Cadastre-se</h1>
         <Div>
           <SubDiv>
-            <>
-              {inputs.map(input => {
-                return (
-                  <input
-                    placeholder={input}
-                    key={input}
-                    type={type[inputs.indexOf(input)]}
-                    onChange={this.set}
-                    accept={
-                      type[inputs.indexOf(input)] === "file" ? "image/*" : ""
-                    }
-                  />
-                );
-              })}
-            </>
+            <Form>
+              <Form.Group>
+                <Form.Control type="text" placeholder="Nome" />
+                <Form.Text />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type={file}
+                  placeholder="Foto de perfil"
+                  onFocus={this.type}
+                  accept="image/x-png,image/gif,image/jpeg"
+                />
+                <Form.Text />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type={date}
+                  onFocus={this.type}
+                  placeholder="Data de nascimento"
+                />
+                <Form.Text />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control type="number" placeholder="CPF" />
+                <Form.Text />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type="email"
+                  placeholder="Email"
+                  onChange={this.set}
+                />
+                <Form.Text />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control type="number" placeholder="Telefone" />
+                <Form.Text />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  type="password"
+                  placeholder="Senha"
+                  onChange={this.set}
+                />
+                <Form.Text />
+              </Form.Group>
+              <Form.Group>
+                <Form.Control type="password" placeholder="Confirmar senha" />
+                <Form.Text />
+              </Form.Group>
+            </Form>
             <Submit type="button" onClick={this.createAccount}>
               Cadastrar
             </Submit>

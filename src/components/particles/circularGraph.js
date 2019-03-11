@@ -1,23 +1,13 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Carousel from "react-bootstrap/Carousel";
+import Overlay from "react-bootstrap/Overlay";
+import Popover from "react-bootstrap/Popover";
 
 import Ellipse from "../../static/Ellipse.png";
 import width from "../../config";
 
 const loads = ["load 1", "load 2", "load 3", "load 4"];
-const key = [
-  "Sample 0",
-  "Sample 1",
-  "Sample 2",
-  "Sample 3",
-  "Sample 4",
-  "Sample 5",
-  "Sample 6",
-  "Sample 7",
-  "Sample 8",
-  "Sample 9"
-];
 
 const Main = styled.div`
   align-items: center;
@@ -56,81 +46,39 @@ const Percent = styled.p`
   font-size: 40px;
   font-weight: bold;
   margin: 0 0 0 0;
+  pointer-events: none;
 `;
 
 const SimpleTxt = styled.p`
   margin: 0 0 0 0;
+  pointer-events: none;
 `;
 
-const ToggleDiv = styled.div`
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.3);
-  display: flex;
-  filter: none;
-  height: 100vh;
-  justify-content: center;
-  left: 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-`;
-
-const KeyList = styled.div`
-  background-color: #51eaea;
-  border-radius: 40px;
-  color: #626262;
-  height: 350px;
-  ${width <= 768 ? "overflow-x: hidden;" : "overflow-y: scroll;"}
-  width: 300px;
-  &::-webkit-scrollbar {
-    width: 0.4rem;
-  }
-  &::-webkit-scrollbar-button {
-    height: 30px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #aaa;
-    border-radius: 7px;
-    &:hover {
-      background: #888;
-    }
-  }
+const Pop = styled(Popover)`
+  color: #000;
   div {
-    align-items: center;
     display: flex;
-    font-size: 16px;
-    justify-content: space-evenly;
-    margin-left: -25px;
-  }
-  input {
-    margin-top: -12px;
-  }
-  button {
-    background-color: transparent;
-    border: none;
-    border-radius: 100vw;
-    height: 20px;
-    margin-top: -12px;
-    width: 20px;
-  }
-`;
-
-const SubToggle = styled.div`
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  h6 {
-    margin-left: 30px;
+    flex-direction: column;
+    div {
+      display: flex;
+      flex-direction: row;
+      input {
+        margin-left: 10px;
+        margin-top: 6px;
+      }
+    }
   }
 `;
 
 class CircularGraph extends Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
     this.handleSelect = this.handleSelect.bind(this);
+
+    this.handleClick = ({ target }) => {
+      this.setState(s => ({ target, show: !s.show }));
+    };
 
     this.state = {
       index: 0,
@@ -138,12 +86,8 @@ class CircularGraph extends Component {
       indicators: false,
       slide: true,
       direction: null,
-      interval: 0
-    };
-
-    this.toggle = () => {
-      this.setState(prevState => ({ open: !prevState.open }));
-      console.log(this.state.open);
+      interval: 0,
+      show: false
     };
   }
 
@@ -160,8 +104,7 @@ class CircularGraph extends Component {
       controls,
       indicators,
       slide,
-      interval,
-      open
+      interval
     } = this.state;
     return (
       <Main>
@@ -178,7 +121,7 @@ class CircularGraph extends Component {
             {loads.map(load => {
               return (
                 <Carousel.Item key={load}>
-                  <Div onClick={this.toggle}>
+                  <Div>
                     <SubDiv>
                       <Percent>100%</Percent>
                       <SimpleTxt>Completo</SimpleTxt>
@@ -193,35 +136,48 @@ class CircularGraph extends Component {
           loads.map(load => {
             return (
               <Div key={load}>
-                <SubDiv onClick={this.toggle}>
+                <SubDiv onClick={this.handleClick}>
                   <Percent>100%</Percent>
                   <SimpleTxt>Completo</SimpleTxt>
                 </SubDiv>
                 <SimpleTxt>{load}</SimpleTxt>
+                <Overlay
+                  show={this.state.show}
+                  target={this.state.target}
+                  placement="bottom"
+                  container={this}
+                  containerPadding={20}
+                >
+                  <Pop
+                    id="popover-contained"
+                    title="Escolha suas palavras chaves"
+                  >
+                    <div>
+                      <label for="Sample1">Sample1</label>
+                      <input type="checkbox" id="Sample1" />
+                    </div>
+                    <div>
+                      <label for="Sample2">Sample2</label>
+                      <input type="checkbox" id="Sample2" />
+                    </div>
+                    <div>
+                      <label for="Sample3">Sample3</label>
+                      <input type="checkbox" id="Sample3" />
+                    </div>
+                    <div>
+                      <label for="Sample4">Sample4</label>
+                      <input type="checkbox" id="Sample4" />
+                    </div>
+                    <div>
+                      <label for="Sample5">Sample5</label>
+                      <input type="checkbox" id="Sample5" />
+                    </div>
+                  </Pop>
+                </Overlay>
               </Div>
             );
           })
         )}
-        <div>
-          {open ? (
-            <ToggleDiv>
-              <KeyList>
-                <SubToggle>
-                  <h6>Test</h6>
-                  <button onClick={this.toggle}>x</button>
-                </SubToggle>
-                {key.map(keyWords => {
-                  return (
-                    <div>
-                      <input type="checkbox" key={keyWords} />
-                      <p>{keyWords}</p>
-                    </div>
-                  );
-                })}
-              </KeyList>
-            </ToggleDiv>
-          ) : null}
-        </div>
       </Main>
     );
   }

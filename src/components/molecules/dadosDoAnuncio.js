@@ -72,13 +72,12 @@ const AddFinal = styled.div`
   align-items: center;
   background-color: #fd6d80;
   border-radius: 37px;
-  bottom: 0;
   color: #fff;
   display: flex;
   flex-direction: column;
   height: 150px;
   justify-content: center;
-  margin: 0 0 -29px 0;
+  margin: 0 0 -40px 0;
   width: 100%;
   p {
     margin: 0;

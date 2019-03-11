@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import Carousel from "react-bootstrap/Carousel";
+import InputGroup from "react-bootstrap/InputGroup";
 
 import Context from "../../context";
 import Rank from "../atoms/rank";
@@ -13,7 +14,7 @@ const Main = styled.div`
   flex-direction: column;
   height: 725px;
   justify-content: center;
-  padding: ${width <= 768 ? "20px" : "0px 170px 0px 170px"};
+  padding: ${width <= 768 ? "20px" : "0px 160px 0px 160px"};
 `;
 
 const Div = styled.div`
@@ -42,13 +43,17 @@ const Input = styled.input`
   align-self: center;
   background-color: rgba(0, 0, 0, 0);
   border: solid #fff 2px;
-  border-radius: 100px;
+  border-left: none;
+  border-right: none;
   color: #fff;
   font-size: ${width <= 768 ? "20px" : "45px"};
   height: ${width <= 768 ? "30px" : "60px"};
   text-align: center;
   text-justify: center;
-  width: 70%;
+  width: 35%;
+  ::-webkit-inner-spin-button {
+    display: none;
+  }
   ::placeholder {
     color: #fff;
     font-size: ${width <= 768 ? "20px" : "45px"};
@@ -56,6 +61,39 @@ const Input = styled.input`
     text-align: center;
     text-justify: center;
   }
+`;
+
+const BootstrapInput = styled(InputGroup)`
+  display: flex;
+  justify-content: center;
+`;
+
+const Currency = styled(InputGroup.Text)`
+  background-color: rgba(0, 0, 0, 0);
+  border: solid #fff 2px;
+  border-bottom-left-radius: 100vw;
+  border-right: solid #fff 0.5px;
+  border-top-left-radius: 100vw;
+  color: #fff;
+  font-size: ${width <= 768 ? "20px" : "45px"};
+  font-weight: bold;
+  height: ${width <= 768 ? "30px" : "60px"};
+  text-align: center;
+  text-justify: center;
+`;
+
+const Cents = styled(InputGroup.Text)`
+  background-color: rgba(0, 0, 0, 0);
+  border: solid #fff 2px;
+  border-bottom-right-radius: 100vw;
+  border-left: solid #fff 0.5px;
+  border-top-right-radius: 100vw;
+  color: #fff;
+  font-size: ${width <= 768 ? "20px" : "45px"};
+  font-weight: bold;
+  height: ${width <= 768 ? "30px" : "60px"};
+  text-align: center;
+  text-justify: center;
 `;
 
 class Ranking extends Component {
@@ -100,11 +138,19 @@ class Ranking extends Component {
                   Lorem {width > 768 && <br />} impsum dolor{" "}
                   {width > 768 && <br />} sit amet.
                 </p>
-                <Input
-                  placeholder="R$2000.00"
-                  type="number"
-                  onChange={this.handleValue}
-                />
+                <BootstrapInput>
+                  <InputGroup.Prepend>
+                    <Currency>R$</Currency>
+                  </InputGroup.Prepend>
+                  <Input
+                    placeholder="2000"
+                    type="number"
+                    onChange={this.handleValue}
+                  />
+                  <InputGroup.Append>
+                    <Cents>.00</Cents>
+                  </InputGroup.Append>
+                </BootstrapInput>
                 <p>
                   Voce pode digitar valores diferentes {width > 768 && <br />}{" "}
                   para ver outras opções de anuncio.
@@ -122,11 +168,19 @@ class Ranking extends Component {
                 Lorem {width > 768 && <br />} impsum dolor
                 {width > 768 && <br />} sit amet.
               </p>
-              <Input
-                placeholder="R$2000.00"
-                type="number"
-                onChange={this.handleValue}
-              />
+              <BootstrapInput>
+                <InputGroup.Prepend>
+                  <Currency>R$</Currency>
+                </InputGroup.Prepend>
+                <Input
+                  placeholder="2000"
+                  type="number"
+                  onChange={this.handleValue}
+                />
+                <InputGroup.Append>
+                  <Cents>.00</Cents>
+                </InputGroup.Append>
+              </BootstrapInput>
               <p>
                 Voce pode digitar valores diferentes {width > 768 && <br />}
                 para ver outras opções de anuncio.

@@ -37,12 +37,12 @@ const Img = styled.div`
   border: solid #626262 1px;
   border-radius: 100%;
   display: flex;
-  height: 70px;
+  height: 55px;
   justify-content: center;
   margin: 0px 24px 0px 24px;
-  width: 70px;
+  width: 55px;
   img {
-    height: 40px;
+    height: 35px;
   }
 `;
 

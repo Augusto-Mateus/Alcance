@@ -14,7 +14,8 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   height: 845px;
-  padding: ${width <= 768 ? "160px 0 0 0" : "160px 170px 0 170px"};
+  justify-content: center;
+  padding: ${width <= 768 ? "0px 0 0 0" : "0px 170px 0 170px"};
 `;
 
 const Title = styled.p`
@@ -40,6 +41,8 @@ class Segmentacao extends Component {
         <br />
         <LoadBar />
         <Txt>Ótimo, estamos quase lá!</Txt>
+        <br />
+        <br />
         <CircularGraph />
       </Main>
     );
